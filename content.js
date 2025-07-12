@@ -14,7 +14,8 @@
     img.style.left = '0px'; // ✅ use left instead of right
     img.style.bottom = '0px';
     img.style.zIndex = '999999';
-    img.style.width = '100px';
+    img.style.width = '150px';
+    img.style.high = '150px';
     img.style.pointerEvents = 'none';
     img.setAttribute('draggable', false);
     document.body.appendChild(img);
