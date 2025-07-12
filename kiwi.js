@@ -1,11 +1,11 @@
 (function() {
     var img = document.createElement('img');
-    var idleSrc = '';
-    var walkSrc = '';
+    var idleSrc = 'assets/KiwiIdle.gif';
+    var walkSrc = 'assets/KiwiWalking.gif';
     var walkSound = new Audio('');
     var rareGifs = [
-        { src: 'https://homelesspigeon.vercel.app/assets/robloxtested.png', chance: 0.001 },  
-        { src: 'https://homelesspigeon.vercel.app/assets/PigeonRare2.gif', chance: 0.000001 } 
+        { src: '', chance: 0.001 },  
+        { src: '', chance: 0.000001 } 
     ];
     img.src = idleSrc;
     img.style.position = 'fixed';
