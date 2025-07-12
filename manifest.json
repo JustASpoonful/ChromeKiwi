@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "ChromeKiwi",
+  "version": "1.0",
+  "description": "A cute Kiwi Bird that walks around your screen!",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
