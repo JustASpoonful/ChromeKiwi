@@ -1,12 +1,14 @@
 (function() {
-    var img = document.createElement('img');
-    var idleSrc = 'assets/KiwiIdle.gif';
-    var walkSrc = 'assets/KiwiWalking.gif';
-    var walkSound = new Audio('');
-    var rareGifs = [
-        { src: '', chance: 0.001 },  
-        { src: '', chance: 0.000001 } 
+    const idleSrc = chrome.runtime.getURL('assets/KiwiIdle.gif');
+    const walkSrc = chrome.runtime.getURL('assets/KiwiWalking.gif');
+    const honkSoundSrc = chrome.runtime.getURL('assets/nah.wav');
+
+    const rareGifs = [
+        { src: '', chance: 0.001 },
+        { src: '', chance: 0.000001 }
     ];
+
+    const img = document.createElement('img');
     img.src = idleSrc;
     img.style.position = 'fixed';
     img.style.bottom = '0px';
@@ -15,17 +17,19 @@
     img.setAttribute('draggable', false);
     document.body.appendChild(img);
 
-    var speed = 3;
-    var chasing = false;
-    var Bird = 1;
-    var direction = {x: 1, y: 1};
-    var isWalking = false;
-    var isRareIdle = false;
+    const walkSound = new Audio('');
+    const honkSound = new Audio(honkSoundSrc);
+
+    let speed = 3;
+    let chasing = false;
+    let direction = {x: 1, y: 1};
+    let isWalking = false;
+    let isRareIdle = false;
 
     setInterval(function() {
         if (!chasing) {
-            var x = parseInt(img.style.right);
-            var y = parseInt(img.style.bottom);
+            let x = parseInt(img.style.right);
+            let y = parseInt(img.style.bottom);
 
             if (x > window.innerWidth - 100 || x < 0) direction.x *= -1;
             if (y > window.innerHeight - 100 || y < 0) direction.y *= -1;
@@ -47,7 +51,6 @@
             } else {
                 img.style.bottom = (y + speed * direction.y) + 'px';
             }
-
         }
     }, 20);
 
@@ -56,7 +59,7 @@
             speed = Math.random() < 0.5 ? 0 : 5;
             if (speed === 0 && !isRareIdle) {
                 rareGifs.forEach(function(gif) {
-                    if (Math.random() < gif.chance) {
+                    if (Math.random() < gif.chance && gif.src) {
                         img.src = gif.src;
                         isRareIdle = true;
                     }
@@ -68,7 +71,6 @@
         }
     }, 1000);
 
-    var honkSound = new Audio('assets/nah.wav');
     setInterval(function() {
         if (Math.random() < 0.05) {
             honkSound.play();
