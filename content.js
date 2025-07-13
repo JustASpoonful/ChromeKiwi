@@ -4,11 +4,11 @@
     const honkSoundSrc = chrome.runtime.getURL('assets/nah.wav');
 
     const messages = [
-        'Hello there!',
-        'Did you know? Kiwi birds can\'t fly.',
-        'Beware of the edge...',
-        'Just a little note...',
-        'Surprise! This is a tab.'
+        'I am kiwi',
+        'jsahdkashdknxjskada',
+        'whatcha doin there?',
+        'Be in tune for upcoming major updates!|',
+        'Surprise! This is a note'
     ];
 
     const img = document.createElement('img');
