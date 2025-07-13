@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChromeKiwi Update!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #status {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+
+        .installed {
+            color: green;
+        }
+
+        .not-installed {
+            color: red;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="status">Update Available!</div>
+    <button id="downloadBtn">Download Update File</button>
+
+    <script>
+        const CURRENT_VERSION = 'v1.0.0';
+
+        const statusDiv = document.getElementById('status');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        function updateStatus() {
+            const savedVersion = localStorage.getItem('installedUpdateVersion');
+            if (savedVersion === CURRENT_VERSION) {
+                statusDiv.textContent = '✅ Update File Installed';
+                statusDiv.className = 'installed';
+            } else {
+                statusDiv.textContent = 'Update Available!';
+                statusDiv.className = 'not-installed';
+            }
+        }
+
+        updateStatus();
+
+        downloadBtn.addEventListener('click', () => {
+            const fileUrl = 'data:text/plain,This is your update file content for version ' + CURRENT_VERSION;
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = 'Update-' + CURRENT_VERSION + '.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            localStorage.setItem('installedUpdateVersion', CURRENT_VERSION);
+
+            // Refresh the page after short delay to ensure download starts
+            setTimeout(() => {
+                location.reload();
+            }, 500);
+        });
+
+    </script>
+
+</body>
+</html>
