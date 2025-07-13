@@ -1,90 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chrome Kiwi</title>
   <style>
     :root {
-      --bg: #121212;
-      --fg: #e0e0e0;
+      --bg1: #0d0d0d;
+      --bg2: #112d18;
+      --fg: #f5f5f5;
+      --dim: #a1a1a1;
       --accent: #4caf50;
-      --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      --accent-hover: #66bb6a;
+      --glass: rgba(255, 255, 255, 0.04);
+      --blur: 18px;
+      --radius: 16px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--fg); font-family: var(--font); line-height: 1.6; }
-    header { padding: 2rem; text-align: center; background: #1e1e1e; }
-    header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
-    header p { font-size: 1.1rem; opacity: 0.8; }
-    nav { text-align: center; margin-top: 1rem; }
-    nav a { color: var(--accent); margin: 0 1rem; text-decoration: none; font-weight: bold; }
-    section { padding: 4rem 2rem; max-width: 800px; margin: auto; }
-    .button { display: inline-block; background: var(--accent); color: #fff; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; margin-top: 1rem; }
-    .features { display: grid; grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); gap: 2rem; margin-top: 2rem; }
-    .feature { background: #1e1e1e; padding: 1.5rem; border-radius: 8px; text-align: center; }
-    .feature h3 { margin-bottom: 0.5rem; }
-    footer { background: #1e1e1e; text-align: center; padding: 2rem; font-size: 0.9rem; opacity: 0.7; }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: var(--font);
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--fg);
+      scroll-behavior: smooth;
+      min-height: 100vh;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    nav a {
+      color: var(--fg);
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent-hover);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--dim);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .glass-box {
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .glass-box:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .features {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .glass-box h3 {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+    }
+
+    .glass-box p {
+      color: var(--dim);
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--fg);
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid rgba(76, 175, 80, 0.5);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+    }
+
+    .button:hover {
+      transform: scale(1.03);
+      background: rgba(76, 175, 80, 0.2);
+      box-shadow: 0 6px 24px rgba(76, 175, 80, 0.25);
+      border: 1px solid rgba(102, 187, 106, 0.6);
+    }
+
+    .button:active {
+      transform: scale(0.97);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3) inset;
+    }
+
+    .button.neon {
+      background: linear-gradient(145deg, #4caf50 0%, #8bc34a 100%);
+      color: #000;
+      box-shadow: 0 0 10px #4caf50, 0 0 20px #8bc34a;
+    }
+
+    .button.neon:hover {
+      box-shadow: 0 0 20px #4caf50, 0 0 40px #8bc34a;
+    }
+
+    ol {
+      max-width: 700px;
+      margin: 2rem auto;
+      color: var(--dim);
+      line-height: 1.8;
+    }
+
+    ol li {
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(5px);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+
+      nav a {
+        margin: 0 0.5rem;
+        font-size: 0.95rem;
+      }
+    }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Chrome Kiwi</h1>
-    <p>A charming Kiwi (bird) companion on your desktop. Fun, interactive, and customizable.</p>
     <nav>
       <a href="#about">About</a>
+      <a href="#features">Features</a>
       <a href="#download">Download</a>
-      <a href="#instructions">Instructions</a>
+      <a href="#instructions">Install</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
 
-  <section id="about">
-    <h2>About ChromeKiwi</h2>
-    <p>ChromeKiwi is a lightweight desktop companion that wanders around your screen, reacts to clicks, and adds a bit of joy to your workday. Built with modern web technologies, it runs on Mac, Windows, and Linux via a simple Chrome or Edge extension.</p>
+  <section class="hero">
+    <h2>Welcome to the Jungle</h2>
+    <p>Chrome Kiwi is your personal jungle buddy—walking across your screen, honking, and occasionally dragging out a meme or a note. Built as a Chrome Extension, it's light, fun, and 100% adorable.</p>
   </section>
 
-  <section id="features">
+  <section id="about" class="section">
+    <h2>About Chrome Kiwi</h2>
+    <div class="glass-box">
+      <p>Chrome Kiwi is a modern, playful desktop pet that lives in your browser. It reacts to movement, avoids your mouse, and sometimes surprises you with little gifts or mischief. It's lightweight, customizable, and built for Chrome and Edge.</p>
+    </div>
+  </section>
+
+  <section id="features" class="section">
     <h2>Features</h2>
     <div class="features">
-      <div class="feature">
+      <div class="glass-box">
         <h3>Wanders Randomly</h3>
-        <p>Keeps you company by exploring corners of your screen.</p>
+        <p>Your Kiwi explores the screen on its own, bumping into edges and dodging your cursor.</p>
       </div>
-      <div class="feature">
-        <h3>Good Companion!</h3>
-        <p>Feeling alone? or bored?</p>
+      <div class="glass-box">
+        <h3>Rare Interactions</h3>
+        <p>It might pull out a notepad, drop a meme, or play a sound… but only rarely, to keep you guessing.</p>
+      </div>
+      <div class="glass-box">
+        <h3>Fully Customizable</h3>
+        <p>Modify the JavaScript to control speed, frequency, reactions, images, and more.</p>
       </div>
     </div>
   </section>
 
-  <section id="download">
+  <section id="download" class="section">
     <h2>Download</h2>
-    <p>Get the latest stable release of Kiwi Pet and install as a Chrome/Edge extension.</p>
-    <a class="button" href="/downloads/kiwi-pet-extension.zip" download>Download v1.0.0</a>
-    <p style="margin-top:1rem;font-size:0.9rem;opacity:0.8;">Alternative formats: <a href="/downloads/kiwi-pet-extension.crx" style="color:var(--accent)">.crx</a>, <a href="/downloads/kiwi-pet-extension.xpi" style="color:var(--accent)">.xpi</a></p>
+    <div class="glass-box">
+      <p>Ready to bring Chrome Kiwi to life? Download the extension and follow the steps below:</p>
+      <a class="button" href="/downloads/kiwi-pet-extension.zip" download>Download v1.0.0</a>
+      <p style="margin-top:1rem;">Other formats: <a href="/downloads/kiwi-pet-extension.crx">.crx</a>, <a href="/downloads/kiwi-pet-extension.xpi">.xpi</a></p>
+    </div>
   </section>
 
-  <section id="instructions">
+  <section id="instructions" class="section">
     <h2>Installation Instructions</h2>
-    <ol style="margin-top:1rem;">
-      <li>Download the ZIP file and extract to a folder.</li>
-      <li>Open your browser's <code>chrome://extensions</code> (or <code>edge://extensions</code>).</li>
-      <li>Enable <strong>Developer mode</strong> in the top-right corner.</li>
-      <li>Click <strong>Load unpacked</strong> and select the extracted folder.</li>
-      <li>Kiwi Pet will appear and start roaming your desktop!</li>
-    </ol>
-    <p style="opacity:0.8;font-size:0.9rem;">Note: Remove other conflicting desktop pet extensions for best experience.</p>
+    <div class="glass-box">
+      <ol>
+        <li>Download the ZIP file and extract it to a folder.</li>
+        <li>Open <code>chrome://extensions</code> or <code>edge://extensions</code>.</li>
+        <li>Enable <strong>Developer mode</strong> in the top-right corner.</li>
+        <li>Click <strong>Load unpacked</strong> and select the folder.</li>
+        <li>Kiwi will appear and start walking around!</li>
+      </ol>
+      <p style="text-align:center;">💡 Tip: Remove other screen pets for best results.</p>
+    </div>
   </section>
 
-  <section id="contact">
+  <section id="contact" class="section">
     <h2>Contact & Support</h2>
-    <p>If you run into issues or have ideas, reach out:</p>
-    <p>Email: <a href="mailto:support@kiwipet.app" style="color:var(--accent)">support@kiwipet.app</a></p>
-    <p>GitHub: <a href="https://github.com/username/kiwi-pet" style="color:var(--accent)">github.com/username/kiwi-pet</a></p>
+    <div class="glass-box">
+      <p>Have questions or feature ideas?</p>
+      <p>Email: <a href="mailto:support@kiwipet.app">support@kiwipet.app</a></p>
+      <p>GitHub: <a href="https://github.com/username/kiwi-pet">github.com/username/kiwi-pet</a></p>
+    </div>
   </section>
 
-  <footer>
-    &copy; 2025 Kiwi Pet. All rights reserved.
-  </footer>
+  <div class="footer">
+    &copy; 2025 Chrome Kiwi. All rights reserved.
+  </div>
+
 </body>
 </html>
