@@ -7,7 +7,7 @@
         'I am kiwi',
         'jsahdkashdknxjskada',
         'whatcha doin there?',
-        'Be in tune for upcoming major updates!|',
+        'Be in tune for upcoming major updates!',
         'Surprise! This is a note'
     ];
 
@@ -36,6 +36,14 @@
     let targetSide = null;
     const imgWidth = 150;
 
+    // --- Adaptive Learning Memory ---
+    const badDirectionMap = {
+        left: 0,
+        right: 0,
+        up: 0,
+        down: 0
+    };
+
     function updatePosition() {
         if (walkingToEdge) {
             if (!isWalking) { img.src = walkSrc; isWalking = true; }
@@ -48,8 +56,11 @@
                 createTab();
             }
         } else {
-            if (posX <= 0 || posX >= window.innerWidth - imgWidth) direction.x *= -1;
-            if (posY <= 0 || posY >= window.innerHeight - imgWidth) direction.y *= -1;
+            if (posX <= 0) { direction.x = 1; badDirectionMap.left += 1; }
+            if (posX >= window.innerWidth - imgWidth) { direction.x = -1; badDirectionMap.right += 1; }
+            if (posY <= 0) { direction.y = 1; badDirectionMap.down += 1; }
+            if (posY >= window.innerHeight - imgWidth) { direction.y = -1; badDirectionMap.up += 1; }
+
             img.style.transform = direction.x < 0 ? 'scaleX(-1)' : 'scaleX(1)';
 
             if (speed > 0) {
@@ -140,12 +151,24 @@
             currentWidth += 5;
             if (currentWidth >= targetWidth) {
                 clearInterval(dragInterval);
-                boxActive = false; // allow kiwi to move again
+                boxActive = false;
             }
             tab.style.width = `${currentWidth}px`;
             posX = side === 'left' ? currentWidth : window.innerWidth - imgWidth - currentWidth;
             img.style.left = `${posX}px`;
         }, 20);
+    }
+
+    // Choose a better direction based on what directions have failed less
+    function chooseSmartDirection() {
+        const scores = {
+            x: (badDirectionMap.left < badDirectionMap.right) ? -1 : 1,
+            y: (badDirectionMap.down < badDirectionMap.up) ? -1 : 1
+        };
+
+        // Add randomness with bias
+        direction.x = Math.random() < 0.7 ? scores.x : (Math.random() < 0.5 ? -1 : 1);
+        direction.y = Math.random() < 0.7 ? scores.y : (Math.random() < 0.5 ? -1 : 1);
     }
 
     setInterval(() => {
@@ -158,8 +181,7 @@
     setInterval(() => {
         if (!walkingToEdge && !boxActive) {
             speed = Math.random() < 0.5 ? 0 : 2 + Math.random() * 3;
-            direction.x = Math.random() < 0.5 ? -1 : 1;
-            direction.y = speed > 0 ? (Math.random() < 0.7 ? (Math.random() < 0.5 ? 1 : -1) : 0) : 0;
+            chooseSmartDirection();
         }
     }, 1200);
 
