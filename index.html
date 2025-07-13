@@ -200,6 +200,23 @@
         font-size: 0.95rem;
       }
     }
+
+    .gradient-text {
+  font-size: 1.5em;
+  font-weight: 500; /* Slightly less bold */
+  background: linear-gradient(
+    90deg,
+    #0f62fe,   /* blue */
+    #a56eff,   /* purple */
+    #ff2d55,   /* pink-red */
+    #ff9f0a    /* orange */
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
   </style>
 </head>
 <body>
@@ -241,6 +258,18 @@
       <div class="glass-box">
         <h3>Fully Customizable</h3>
         <p>Modify the JavaScript to control speed, frequency, reactions, images, and more.</p>
+      </div>
+      <div class="glass-box">
+        <div class="gradient-text">Adaptive Movement</div>
+        <br>
+        <p>-The kiwi tracks which directions caused it to get stuck at edges more frequently.</p>
+        <br>
+        <p>-When picking new directions, it biases away from "bad" directions (where it previously got stuck).</p>
+      </div>
+      <div class="glass-box">
+        <div class="gradient-text">Memory</div>
+        <br>
+        <p>This feature is currently in the works.</p>
       </div>
     </div>
   </section>
