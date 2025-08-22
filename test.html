@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kiwi Test Page</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kiwi Extension Testing Page</h1>
+
+  <script>
+    // ✅ Quick patch for testing outside Chrome Extension
+    if (typeof chrome === "undefined") {
+      window.chrome = {
+        runtime: {
+          getURL: (path) => path // return raw path
+        }
+      };
+    }
+  </script>
+
+  <!-- Paste your Kiwi script below -->
+  <script src="beta-kiwi.js"></script>
+</body>
+</html>
