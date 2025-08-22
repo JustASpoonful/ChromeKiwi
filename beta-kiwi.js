@@ -1,6 +1,11 @@
 (function () {
-    const idleSrc = chrome.runtime.getURL('assets/KiwiIdle.gif');
-    const walkSrc = chrome.runtime.getURL('assets/KiwiWalking.gif');
+   const idleSrc = (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL)
+    ? chrome.runtime.getURL('assets/KiwiIdle.gif')
+    : 'assets/KiwiIdle.gif';
+
+const walkSrc = (typeof chrome !== "undefined" && chrome.runtime && chrome.runtime.getURL)
+    ? chrome.runtime.getURL('assets/KiwiWalking.gif')
+    : 'assets/KiwiWalking.gif';
 
     const messages = [
         'I am kiwi',
